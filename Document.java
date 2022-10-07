@@ -1,18 +1,42 @@
 import java.util.ArrayList;
 
-
 public class Document {
     private String fileName;
     private ArrayList<String> lines;
 
+    private final int TAB_SIZE = 8;
+
     public Document(String fileName) {
-        this.fileName = fileName;  
-        FileManipulator reader = new FileManipulator();      
-        lines = reader.readFile(fileName);
+        this.fileName = fileName;
+        lines = FileManipulator.readFile(fileName);
     }
 
     public String view() {
-        return "";
+        int maxIntLength = 0;
+        String result = "";
+
+        for (String line : lines) {
+            if (line.length() > maxIntLength)
+                maxIntLength = line.length();
+        }
+
+        for (int i = 0; i < maxIntLength + TAB_SIZE * 2; i++)
+            result += "-";
+        result += "\n";
+
+        for (String line : lines) {
+            result += "|\t";
+            result += line;
+            for (int i = line.length(); i < maxIntLength + TAB_SIZE; i++)
+                result += " ";
+            result += "|\n";
+        }
+
+        for (int i = 0; i < maxIntLength + TAB_SIZE * 2; i++)
+            result += "-";
+        result += "\n";
+
+        return result;
     }
 
     public String append(String line) {
@@ -27,13 +51,11 @@ public class Document {
     }
 
     public String save() {
-        FileManipulator writer = new FileManipulator();
-        if(writer.writeFile(fileName, lines)) {
+        if (FileManipulator.writeFile(fileName, lines)) {
             return "The file has been saved";
-        }
-        else{
+        } else {
             return "Sorry, we cannot save at this time";
         }
-        
+
     }
 }
