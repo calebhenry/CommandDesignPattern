@@ -1,7 +1,3 @@
-// Copyright 2022 Row 3
-
-package command;
-
 import java.util.HashMap;
 
 public class InputHandler {
