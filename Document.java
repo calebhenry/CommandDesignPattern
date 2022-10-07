@@ -12,7 +12,7 @@ public class Document {
     }
 
     public String view() {
-        
+        return "";
     }
 
     public String append(String line) {
